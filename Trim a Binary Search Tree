@@ -1,0 +1,13 @@
+class Solution {
+    public TreeNode trimBST(TreeNode root, int low, int high) {
+        if (root == null) return root;
+        
+        if (root.val < low)  return trimBST(root.right, low, high); // recurse on the right node since the current node is lesser
+        if (root.val > high) return trimBST(root.left, low, high); // recurse on the left node since the current node is greater
+        
+        root.left = trimBST(root.left, low, high); // left node is passed to the next level
+        root.right = trimBST(root.right, low, high); // right node is passed to the next level
+        
+        return root;
+     }
+}
