@@ -1,0 +1,42 @@
+**Approach : **
+
+Used Stack to solve this problem as consider the below example
+"/foo/file1//file2"
+In above example foo is parent directory and file1 is child dir of foo and file2 is child dir of file1
+Hence we need to store the directory in stack hence top most element will be the youngest dir and the bottom directy will be the oldest directy
+Now the problem become simple to solve as
+Condition to solve problem.
+if we infer ".." then we need to pop ans element so to move a dir backward
+if "." is encountered we need to do nothing
+and "/////" multiple slash is replaced by single slash
+
+class Solution {
+    public String simplifyPath(String path) {
+        String temp = "";
+        Stack<String> stck = new Stack<String>(); // Use Stack for solving this file path problem 
+        String arr[] = path.split("/"); //Splitted string to array considering / as splitting condition 
+        String ans = "";                // final ans 
+        for(String s:arr){
+            if((!s.equals(""))){        //if arr doesn't contains empty value 
+                if(s.equals("..")){     //if arr val is equals to .. then i'll pop the elemnt from stack 
+                    if(!stck.isEmpty()){ 
+                        stck.pop();
+                    }      
+                }else if(!s.equals(".")){ //if it's not blank nor .. even not . then we need to add element in stack 
+                    stck.push(s);
+                }
+            } 
+        }
+        
+        for(String s:stck){
+            if(!s.equals("")){
+                ans+="/";               //path always start with /
+                ans+=s;
+            }
+        }
+        if(ans.equals("")){             // if my ans is empty then i need to return /
+            ans+="/";       
+        }
+        return ans;
+    }
+}
